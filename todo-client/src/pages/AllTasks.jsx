@@ -1,15 +1,14 @@
 import React, { useState } from 'react'
 import Layout from '../components/layout/Layout'
 import TaskList from '../components/TaskList';
-import TaskForm from '../components/TaskForm';
-import { FiPlus } from 'react-icons/fi';
 import { useAuth } from '../context/useAuth';
+import TaskForm from '../components/TaskForm';
 
-function Task() {
-    const { deleteTask, tasks } = useAuth();
+function AllTasks() {
+    const { allTasks } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
-  
+
     const handleEdit = (task) => {
       setCurrentTask(task);
       setIsModalOpen(true);
@@ -27,21 +26,11 @@ function Task() {
       <Layout>
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Mes Tâches</h1>
-          <button
-            onClick={() => {
-              setCurrentTask(null);
-              setIsModalOpen(true);
-            }}
-            className="btn btn-primary gap-2"
-          >
-            <FiPlus size={20} />
-            Nouvelle Tâche
-          </button>
+          <h1 className="text-3xl font-bold text-gray-800">Listes des Tâches</h1>
         </div>
-  
-        <TaskList onEdit={handleEdit} onDelete={handleDelete} tasks={tasks} />
-  
+
+        <TaskList onEdit={handleEdit} onDelete={handleDelete} tasks={allTasks}  />
+
         <TaskForm
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
@@ -52,4 +41,4 @@ function Task() {
     );
 }
 
-export default Task
+export default AllTasks

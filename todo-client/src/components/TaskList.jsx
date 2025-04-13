@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { useAuth } from '../context/useAuth';
 import TaskItem from './TaskItem';
 import { FiFilter, FiSearch } from 'react-icons/fi';
 
-const TaskList = ({ onEdit, onDelete }) => {
-  const { tasks } = useAuth();
+const TaskList = ({ onEdit, onDelete, tasks }) => {
   const [search, setSearch] = useState("");
   const filteredTasks = Array.isArray(tasks) ? tasks.filter(task => 
     task.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -14,20 +12,19 @@ const TaskList = ({ onEdit, onDelete }) => {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-      <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
-        <div className="relative w-64">
+      <div className="p-4 border-b border-gray-100 md:flex space-y-4 items-center justify-between bg-gray-50">
+        <div className="relative md:w-64">
           <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10 text-gray-400" />
           <input
             type="text"
             placeholder="Rechercher des tâches..."
             className="input input-bordered pl-10 w-full"
-            value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <div className="flex items-center space-x-2">
           <select className="select select-bordered" onChange={(e) => setSearch(e.target.value)}>
-            <option>Toutes</option>
+            <option disabled>Status</option>
             <option value="0">En cours</option>
             <option value="1">Complétées</option>
           </select>

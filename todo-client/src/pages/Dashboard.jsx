@@ -4,7 +4,7 @@ import { useAuth } from '../context/useAuth';
 import Layout from '../components/layout/Layout';
 
 const Dashboard = () => {
-  const { tasks, user } = useAuth();
+  const { tasks, todayTasks, user } = useAuth();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [motivationalQuote, setMotivationalQuote] = useState('');
   const currentHour = currentTime.getHours();
@@ -27,16 +27,6 @@ const Dashboard = () => {
     ];
     setMotivationalQuote(quotes[Math.floor(Math.random() * quotes.length)]);
   }, []);
-
-  // Filtrage des tâches du jour
-  const todayTasks = Array.isArray(tasks) ? tasks.filter(task => {
-    const taskDate = new Date(task.dueDate);
-    return (
-      taskDate.getDate() === currentTime.getDate() &&
-      taskDate.getMonth() === currentTime.getMonth() &&
-      taskDate.getFullYear() === currentTime.getFullYear()
-    );
-  }) : [];
 
   // Statistiques
   const stats = {
@@ -105,7 +95,7 @@ const Dashboard = () => {
           Vos tâches aujourd'hui
         </h2>
         
-        {todayTasks.length > 0 ? (
+        {Array.isArray(todayTasks) &  todayTasks.length > 0 ? (
           <div className="space-y-3">
             {todayTasks.map(task => (
               <TaskCard key={task.id} task={task} />

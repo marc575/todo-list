@@ -3,7 +3,7 @@ import {
   FiHome, 
   FiUser,
   FiCheckSquare, 
-  FiSettings,
+  FiShare,
   FiCalendar,
   FiLogOut
 } from 'react-icons/fi';
@@ -17,6 +17,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
     { path: '/dashboard', icon: FiHome, label: 'Tableau de bord' },
     { path: '/tasks', icon: FiCheckSquare, label: 'Tâches' },
     { path: '/calendar', icon: FiCalendar, label: 'Calendrier' },
+    { path: '/community', icon: FiShare, label: 'Communauté' },
     { path: '/profile', icon: FiUser, label: 'Profil' },
   ];
 

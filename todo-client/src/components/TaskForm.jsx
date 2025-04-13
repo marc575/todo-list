@@ -93,7 +93,7 @@ const TaskForm = ({ isOpen, onClose, task }) => {
                   <input
                     type="date"
                     className="input input-bordered pl-10 w-full"
-                    value={new Date(taskData.dueDate).toISOString().split("T")[0]}
+                    value={taskData.dueDate ? new Date(taskData.dueDate).toLocaleDateString() : ''}
                     onChange={(e) => setTaskData({...taskData, dueDate: e.target.value})}
                   />
                 </div>

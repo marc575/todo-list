@@ -11,15 +11,14 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(localStorage.getItem('user') || '');
   const [token, setToken] = useState(localStorage.getItem('token') || '');
-  const [tasks, setTasks] = useState(localStorage.getItem('tasks') || '[]');
+  const [tasks, setTasks] = useState(localStorage.getItem('tasks') || []);
+  const [allTasks, setAllTasks] = useState(localStorage.getItem('allTasks') || []);
+  const [todayTasks, setTodayTasks] = useState(localStorage.getItem('todayTasks') || []);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const axiosAuth = axios.create({
     headers: { Authorization: `Bearer ${token}` },
   });
-
-  useEffect(() => {
-    axiosAuth.get("/api/user").then((res) => setUser(res.data)).catch(() => setUser(null));
-  }, []);
 
   const profile = async () => {
     await axios.get("/sanctum/csrf-cookie");
@@ -48,9 +47,12 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('tasks');
+    localStorage.removeItem('allTasks');
     setToken(null);
     setUser(null);
     setTasks(null);
+    setAllTasks(null);
+    setTodayTasks(null);
     navigate("/");
   };
 
@@ -59,6 +61,18 @@ export function AuthProvider({ children }) {
     const res = await axiosAuth.get('/api/tasks');
     setTasks(res.data);
     localStorage.setItem('tasks', res.data);
+
+    setTodayTasks(Array.isArray(tasks) ? tasks.filter(task => {
+      const taskDate = new Date(task.dueDate).toLocaleDateString();
+      return (
+        taskDate.getDate() === currentTime.getDate() &&
+        taskDate.getMonth() === currentTime.getMonth() &&
+        taskDate.getFullYear() === currentTime.getFullYear()
+      );
+    }) : []);
+    localStorage.setItem('todayTasks', res.data);
+
+    console.log(tasks, todayTasks);
   };
 
   const fetchTask = async (id) => {
@@ -66,6 +80,12 @@ export function AuthProvider({ children }) {
     const res = await axiosAuth.get(`/api/tasks/${id}`);
     setTasks(res.data);
     localStorage.setItem('tasks', res.data);
+  };
+
+  const fetchAllTasks = async () => {
+    const res = await axios.get('/api/tasks/all');
+    setAllTasks(res.data);
+    localStorage.setItem('allTasks', res.data);
   };
 
   const addTask = async (form) => {
@@ -84,6 +104,7 @@ export function AuthProvider({ children }) {
     await axios.get("/sanctum/csrf-cookie");
     await axiosAuth.patch(`/api/tasks/${id}/toggle`, data);
     fetchTasks();
+    fetchAllTasks();
   };
 
   const deleteTask = async (id) => {
@@ -92,16 +113,19 @@ export function AuthProvider({ children }) {
     fetchTasks();
   };
 
-
   useEffect(() => {
     if (token) {
       profile();
       fetchTasks();
     }
   }, [token]);
+  
+  useEffect(() => {
+    fetchAllTasks();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, tasks, login, register, logout, fetchTasks, fetchTask, addTask, updateTask, toggleTask, deleteTask }}>
+    <AuthContext.Provider value={{ user, token, tasks, todayTasks, allTasks, login, register, logout, fetchTasks, fetchTask, addTask, updateTask, toggleTask, deleteTask }}>
       {children}
     </AuthContext.Provider>
   );

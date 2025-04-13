@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import Task from '../pages/Task';
 import Calendar from '../pages/Calendar';
 import Profile from '../pages/Profile';
+import AllTasks from '../pages/AllTasks';
 
 const pageTransition = {
   initial: { opacity: 0, y: 20 },
@@ -74,6 +75,16 @@ const AnimatedRoutes = () => {
             <PrivateRoute>
               <motion.div {...pageTransition}>
                 <Task />
+              </motion.div>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/community"
+          element={
+            <PrivateRoute>
+              <motion.div {...pageTransition}>
+                <AllTasks />
               </motion.div>
             </PrivateRoute>
           }
