@@ -80,12 +80,14 @@ export function AuthProvider({ children }) {
     await axios.get("/sanctum/csrf-cookie");
     await axiosAuth.post('/api/tasks', form);
     fetchTasks();
+    fetchAllTasks();
   };
 
   const updateTask = async (id, form) => {
     await axios.get("/sanctum/csrf-cookie");
     await axiosAuth.put(`/api/tasks/${id}`, form);
     fetchTasks();
+    fetchAllTasks();
   };
 
   const toggleTask = async (id, data) => {
@@ -99,12 +101,14 @@ export function AuthProvider({ children }) {
     await axios.get("/sanctum/csrf-cookie");
     await axiosAuth.delete(`/api/tasks/${id}`);
     fetchTasks();
+    fetchAllTasks();
   };
 
   useEffect(() => {
     if (token) {
       profile();
       fetchTasks();
+      fetchAllTasks();
     }
   }, [token]);
   
