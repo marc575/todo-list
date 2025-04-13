@@ -95,7 +95,7 @@ const Dashboard = () => {
           Vos tâches aujourd'hui
         </h2>
         
-        {Array.isArray(todayTasks) &  todayTasks.length > 0 ? (
+        {Array.isArray(todayTasks) & todayTasks.length > 0 ? (
           <div className="space-y-3">
             {todayTasks.map(task => (
               <TaskCard key={task.id} task={task} />

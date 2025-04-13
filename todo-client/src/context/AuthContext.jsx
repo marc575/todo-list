@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { isSameDay } from 'date-fns';
 
 export const AuthContext = createContext();
 
@@ -14,7 +15,6 @@ export function AuthProvider({ children }) {
   const [tasks, setTasks] = useState(localStorage.getItem('tasks') || []);
   const [allTasks, setAllTasks] = useState(localStorage.getItem('allTasks') || []);
   const [todayTasks, setTodayTasks] = useState(localStorage.getItem('todayTasks') || []);
-  const [currentTime, setCurrentTime] = useState(new Date());
 
   const axiosAuth = axios.create({
     headers: { Authorization: `Bearer ${token}` },
@@ -61,18 +61,6 @@ export function AuthProvider({ children }) {
     const res = await axiosAuth.get('/api/tasks');
     setTasks(res.data);
     localStorage.setItem('tasks', res.data);
-
-    setTodayTasks(Array.isArray(tasks) ? tasks.filter(task => {
-      const taskDate = new Date(task.dueDate).toLocaleDateString();
-      return (
-        taskDate.getDate() === currentTime.getDate() &&
-        taskDate.getMonth() === currentTime.getMonth() &&
-        taskDate.getFullYear() === currentTime.getFullYear()
-      );
-    }) : []);
-    localStorage.setItem('todayTasks', res.data);
-
-    console.log(tasks, todayTasks);
   };
 
   const fetchTask = async (id) => {
@@ -123,6 +111,15 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     fetchAllTasks();
   }, []);
+
+  useEffect(() => {
+    setTodayTasks(Array.isArray(tasks) ? tasks.filter(task => {
+      return (
+        isSameDay(new Date(task.dueDate), new Date())
+      );
+    }) : []);
+    localStorage.setItem('todayTasks', todayTasks);
+  }, [tasks]);
 
   return (
     <AuthContext.Provider value={{ user, token, tasks, todayTasks, allTasks, login, register, logout, fetchTasks, fetchTask, addTask, updateTask, toggleTask, deleteTask }}>

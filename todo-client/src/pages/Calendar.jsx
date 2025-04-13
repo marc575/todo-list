@@ -47,13 +47,10 @@ function Calendar() {
                     key={task.id}
                     className={`p-3 rounded-lg border ${priorityColors[task.priority]}`}
                   >
-                    <div className={`font-medium ${task.status ? 'line-through text-gray-400' : 'text-gray-700'}`}>{task.title}</div>
+                    <div className={`font-medium capitalize ${task.status ? 'line-through text-gray-400' : 'text-gray-700'}`}>{task.title}</div>
                     {task.description && (
                       <div className="text-sm text-gray-600 mt-1">{task.description}</div>
                     )}
-                    <div className="text-xs mt-2">
-                      Priorité: {task.priority === 'high' ? 'Élevée' : task.priority === 'medium' ? 'Moyenne' : 'Basse'}
-                    </div>
                   </li>
                 ))}
               </ul>
