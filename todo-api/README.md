@@ -153,5 +153,5 @@ npm run dev
 
 ## 🧑‍💻 Auteur
 
-Marc — https://linkedin.com/in/marc-tatchou
+Tatchou Marc — [https://linkedin.com/in/marc-tatchou](https://www.linkedin.com/in/marc-tatchou-85891a243/)
 
