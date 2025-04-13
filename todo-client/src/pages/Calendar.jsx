@@ -5,6 +5,7 @@ import { fr } from 'date-fns/locale';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import Layout from '../components/layout/Layout'
 import { useAuth } from '../context/useAuth';
+import TaskCard from '../components/TaskCard';
 
 function Calendar() {
   const { tasks } = useAuth();
@@ -43,15 +44,7 @@ function Calendar() {
             {selectedDayTasks.length > 0 ? (
               <ul className="space-y-2">
                 {selectedDayTasks.map(task => (
-                  <li 
-                    key={task.id}
-                    className={`p-3 rounded-lg border ${priorityColors[task.priority]}`}
-                  >
-                    <div className={`font-medium capitalize ${task.status ? 'line-through text-gray-400' : 'text-gray-700'}`}>{task.title}</div>
-                    {task.description && (
-                      <div className="text-sm text-gray-600 mt-1">{task.description}</div>
-                    )}
-                  </li>
+                  <TaskCard key={task.id} task={task} />
                 ))}
               </ul>
             ) : (

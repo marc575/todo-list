@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { FiCheckCircle, FiClock, FiAlertTriangle, FiSun, FiMoon, FiCalendar } from 'react-icons/fi';
 import { useAuth } from '../context/useAuth';
 import Layout from '../components/layout/Layout';
+import TaskCard from '../components/TaskCard';
+import StatCard from '../components/StatCard';
 
 const Dashboard = () => {
   const { tasks, todayTasks, user } = useAuth();
@@ -110,45 +112,6 @@ const Dashboard = () => {
       </div>
     </div>
     </Layout>
-  );
-};
-
-// Composant Carte de Statistique
-const StatCard = ({ icon, title, value, color }) => (
-  <div className="bg-white rounded-xl shadow-sm p-6 flex items-start justify-between">
-    <div>
-      <p className="text-gray-500 text-sm">{title}</p>
-      <p className={`text-2xl font-bold mt-1 ${color}`}>{value}</p>
-    </div>
-    <div className={`p-3 rounded-lg ${color.replace('text', 'bg')} bg-opacity-10`}>
-      {icon}
-    </div>
-  </div>
-);
-
-// Composant Carte de Tâche
-const TaskCard = ({ task }) => {
-  const priorityColors = {
-    high: 'bg-red-100 text-red-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    low: 'bg-green-100 text-green-800'
-  };
-
-  return (
-    <div className="flex items-center p-4 border border-gray-100 rounded-lg hover:bg-gray-100 transition-all">
-      <div className={`p-2 rounded-lg ${priorityColors[task.priority]} mr-4`}>
-        <FiCheckCircle size={18} />
-      </div>
-      <div className="flex-1">
-        <h3 className={`font-medium ${task.status ? 'line-through text-gray-400' : 'text-gray-700'}`}>{task.title}</h3>
-        {task.description && (
-          <p className="text-sm text-gray-500 mt-1">{task.description}</p>
-        )}
-      </div>
-      <div className="text-sm text-gray-500">
-        {new Date(task.dueDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-      </div>
-    </div>
   );
 };
 

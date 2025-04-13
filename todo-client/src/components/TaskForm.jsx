@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { FiX, FiCalendar, FiFlag } from 'react-icons/fi';
 import { useAuth } from '../context/useAuth';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 const TaskForm = ({ isOpen, onClose, task }) => {
   const { addTask, updateTask } = useAuth();
@@ -93,7 +95,7 @@ const TaskForm = ({ isOpen, onClose, task }) => {
                   <input
                     type="date"
                     className="input input-bordered pl-10 w-full"
-                    value={taskData.dueDate ? new Date(taskData.dueDate).toISOString().split('T')[0] : ''}
+                    value={taskData.dueDate ? format(new Date(taskData.dueDate), 'yyyy-MM-dd', { locale: fr }) : ''}
                     onChange={(e) => setTaskData({...taskData, dueDate: e.target.value})}
                   />
                 </div>
