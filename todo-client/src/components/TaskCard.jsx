@@ -1,7 +1,7 @@
 import React from 'react';
-import { FiCheckCircle } from 'react-icons/fi';
+import { FiEye, FiActivity } from 'react-icons/fi';
 
-const TaskCard = ({ task }) => {
+const TaskCard = ({ onShow, task }) => {
     const priorityColors = {
       high: 'bg-red-100 text-red-800',
       medium: 'bg-yellow-100 text-yellow-800',
@@ -9,9 +9,9 @@ const TaskCard = ({ task }) => {
     };
   
     return (
-      <div className="flex items-center p-4 border border-gray-100 rounded-lg hover:bg-gray-100 transition-all">
-        <div className={`p-2 rounded-lg ${priorityColors[task.priority]} mr-4`}>
-          <FiCheckCircle size={18} />
+      <div className={`flex items-center p-4 border border-gray-100 rounded-lg ${priorityColors[task.priority]} transition-all`}>
+        <div className={`p-2 rounded-lg ${priorityColors[task.priority]} mr-4 border-2 `}>
+          <FiActivity size={18} />
         </div>
         <div className="flex-1">
           <h3 className={`font-medium capitalize ${task.status ? 'line-through text-gray-400' : 'text-gray-700'}`}>{task.title}</h3>
@@ -19,8 +19,11 @@ const TaskCard = ({ task }) => {
             <p className="text-sm text-gray-500 mt-1">{task.description}</p>
           )}
         </div>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-500 flex items-center gap-4">
           {new Date(task.dueDate).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+          <button>
+            <FiEye size={18} />
+          </button>
         </div>
       </div>
     );
