@@ -10,7 +10,13 @@ class TaskController extends Controller
 {
     public function index()
     {
-        return Auth::user()->tasks;
+        return array_reverse(Auth::user()->tasks->toArray());
+    }
+
+    public function all()
+    {
+        $tasks = Task::with('user')->get()->toArray();
+        return array_reverse($tasks); 
     }
 
     public function store(Request $request)

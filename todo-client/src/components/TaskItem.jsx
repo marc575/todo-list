@@ -64,7 +64,8 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
           </div>
         </div>
         <div className="flex space-x-2 lg:opacity-0 lg:group-hover:opacity-100 lg:transition-opacity">
-        { task?.user?.name === user?.name ? (
+        { task.user ? (
+          task?.user?.name === user?.name ? (
           <>
             <button 
               onClick={onEdit}
@@ -79,13 +80,28 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
             </button>
           </>
          ) : (
-          <>
-            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+          <div className=' flex items-center justify-center gap-3'>
+            <div className="w-8 h-8 rounded-full bg-indigo-100">
               <img src={`https://ui-avatars.com/api/?name=${task?.user?.name}&background=random`} className="rounded-full" size={16} />
             </div>  
             <span className="text-gray-500 capitalize text-xs">{task?.user?.name}</span>
+          </div>
+         )
+        ): (
+          <>
+            <button 
+              onClick={onEdit}
+              className="btn btn-ghost btn-sm text-gray-500 hover:text-blue-500"
+            >
+              <FiEdit2 size={16} />
+            </button>
+            <button 
+              onClick={onDelete}
+              className="btn btn-ghost btn-sm text-gray-500 hover:text-red-500">
+              <FiTrash2 size={16} />
+            </button>
           </>
-         ) }
+        )}
         </div>
       </div>
     </div>
