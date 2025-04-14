@@ -8,6 +8,7 @@ import {
   FiLogOut
 } from 'react-icons/fi';
 import { useAuth } from '../../context/useAuth';
+import Avatar from '../ui/Avatar';
 
 const Sidebar = ({ isOpen, closeSidebar }) => {
   const { user, logout } = useAuth();
@@ -63,9 +64,7 @@ const Sidebar = ({ isOpen, closeSidebar }) => {
         {/* Section utilisateur */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center">
-              <img src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`} className="rounded-full text-indigo-600" />
-            </div>
+            <Avatar username={user?.name} />
             <div className="overflow-hidden">
               <p className="font-medium text-sm truncate capitalize">{user?.name}</p>
               <p className="text-xs text-gray-500 truncate">{user?.email}</p>

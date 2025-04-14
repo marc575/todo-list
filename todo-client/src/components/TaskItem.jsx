@@ -1,6 +1,7 @@
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { useAuth } from '../context/useAuth';
 import { useEffect } from 'react';
+import Avatar from './ui/Avatar';
 
 const TaskItem = ({ task, onEdit, onDelete }) => {
 
@@ -81,9 +82,7 @@ const TaskItem = ({ task, onEdit, onDelete }) => {
           </>
          ) : (
           <div className=' flex items-center justify-center gap-3'>
-            <div className="w-8 h-8 rounded-full bg-indigo-100">
-              <img src={`https://ui-avatars.com/api/?name=${task?.user?.name}&background=random`} className="rounded-full" size={16} />
-            </div>  
+            <Avatar username={task?.user?.name} /> 
             <span className="text-gray-500 capitalize text-xs">{task?.user?.name}</span>
           </div>
          )

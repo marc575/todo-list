@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "../context/useAuth";
 import Layout from "../components/layout/Layout";
+import Avatar from "../components/ui/Avatar";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -12,9 +13,7 @@ const Profile = () => {
         <div className="card shadow-lg p-6 rounded-xl">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="avatar">
-              <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`} alt={`${user?.name}`} />
-              </div>
+              <Avatar username={user?.name} />
             </div>
             <div className="text-center md:text-start">
               <h2 className="text-2xl font-bold capitalize">{user?.name}</h2>

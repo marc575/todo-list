@@ -4,6 +4,7 @@ import {
     FiBell,
     FiCheckSquare,
 } from 'react-icons/fi';
+import Avatar from '../ui/Avatar';
 
 const Header = ({ toggleSidebar }) => {
   const { user, tasks, todayTasks } = useAuth();
@@ -36,9 +37,7 @@ const Header = ({ toggleSidebar }) => {
           </button>
           
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
-              <img src={`https://ui-avatars.com/api/?name=${user?.name}&background=random`} className="rounded-full" size={16} />
-            </div>
+            <Avatar username={user?.name} />
             <span className="hidden md:inline text-sm font-medium text-gray-700 capitalize">
               {user?.name?.split(' ')[0]}
             </span>
